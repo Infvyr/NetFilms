@@ -1,3 +1,9 @@
+import { Flex } from '@chakra-ui/react';
+
 export default function Home() {
-	return <h1>Home Page</h1>;
+	return (
+		<Flex align="center" justify="center" height="100vh">
+			Home page
+		</Flex>
+	);
 }
