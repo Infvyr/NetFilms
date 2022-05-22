@@ -1,13 +1,14 @@
 import Head from 'next/head';
 import { ChakraProvider } from '@chakra-ui/react';
+import theme from '../config/theme';
 
 function MyApp({ Component, pageProps }) {
 	return (
 		<>
 			<Head>
-				<link rel="icon" type="image/png" href="/favicon.png" />
+				<title>NetFilms</title>
 			</Head>
-			<ChakraProvider>
+			<ChakraProvider theme={theme}>
 				<main>
 					<Component {...pageProps} />
 				</main>
