@@ -8,7 +8,9 @@ function MyApp({ Component, pageProps }) {
 				<link rel="icon" type="image/png" href="/favicon.png" />
 			</Head>
 			<ChakraProvider>
-				<Component {...pageProps} />
+				<main>
+					<Component {...pageProps} />
+				</main>
 			</ChakraProvider>
 		</>
 	);
