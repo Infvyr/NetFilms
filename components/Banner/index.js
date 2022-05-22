@@ -1,5 +1,5 @@
 import { Box, Button, Container, Heading, Text } from '@chakra-ui/react';
-import { Play } from 'react-feather';
+import Image from 'next/image';
 
 export const Banner = (props) => {
 	const { title, subTitle, imgUrl } = props;
@@ -7,6 +7,7 @@ export const Banner = (props) => {
 	const handleOnClick = (e) => {
 		console.log(e.target);
 	};
+
 	return (
 		<Container padding={0} maxW="100%">
 			<Box
@@ -44,7 +45,14 @@ export const Banner = (props) => {
 					<Box>
 						<Button
 							colorScheme="whiteAlpha"
-							leftIcon={<Play size={20} />}
+							leftIcon={
+								<Image
+									src="/static/play-icon.svg"
+									alt="play icon"
+									width={32}
+									height={32}
+								/>
+							}
 							onClick={handleOnClick}
 						>
 							Play
