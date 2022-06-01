@@ -1,6 +1,8 @@
-import Head from 'next/head';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from '../config/theme';
+import Head from 'next/head';
+import { Navbar } from 'components';
+import '../styles/global.css';
 
 function MyApp({ Component, pageProps }) {
 	return (
@@ -9,9 +11,12 @@ function MyApp({ Component, pageProps }) {
 				<title>NetFilms</title>
 			</Head>
 			<ChakraProvider theme={theme}>
-				<main>
-					<Component {...pageProps} />
-				</main>
+				<>
+					<Navbar />
+					<main>
+						<Component {...pageProps} />
+					</main>
+				</>
 			</ChakraProvider>
 		</>
 	);
