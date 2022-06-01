@@ -23,7 +23,7 @@ export const Banner = (props) => {
 					pos: 'absolute',
 					left: 0,
 					w: '100%',
-					h: '100%',
+					h: 'inherit',
 					bgGradient:
 						'linear-gradient(to right, hsl(0deg 0% 0% / 24%), hsl(171deg 4% 30% / 70%))'
 				}}

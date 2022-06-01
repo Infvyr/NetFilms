@@ -1,0 +1,7 @@
+html {
+	height: 100%;
+}
+
+body {
+	--chakra-colors-chakra-body-bg: linear-gradient(to top, #ece9e6, #fefafa);
+}
