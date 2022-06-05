@@ -5,3 +5,4 @@ export { MenuDropDown } from 'components/Navbar/MenuDropDown';
 export { Banner } from 'components/Banner';
 export { Card } from 'components/Card';
 export { CardSection } from 'components/CardSection';
+export { SwitchColor } from 'components/SwitchColor';

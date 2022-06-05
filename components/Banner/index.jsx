@@ -1,8 +1,16 @@
-import { Box, Button, Container, Heading, Text } from '@chakra-ui/react';
+import {
+	Box,
+	Button,
+	Container,
+	Heading,
+	Text,
+	useColorModeValue
+} from '@chakra-ui/react';
 import Image from 'next/image';
 
 export const Banner = (props) => {
 	const { title, subTitle, imgUrl } = props;
+	const btnColorScheme = useColorModeValue('whiteAlpha', 'gray');
 
 	const handleOnClick = (e) => {
 		console.log(e.target);
@@ -44,7 +52,8 @@ export const Banner = (props) => {
 					</Text>
 					<Box>
 						<Button
-							colorScheme="whiteAlpha"
+							pr="6"
+							colorScheme={btnColorScheme}
 							leftIcon={
 								<Image
 									src="/static/play-icon.svg"

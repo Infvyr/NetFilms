@@ -1,24 +1,28 @@
-import { Flex, useMediaQuery } from '@chakra-ui/react';
-import { Logo, Menu, MenuDropDown } from 'components/';
+import { Flex, useColorModeValue, useMediaQuery } from '@chakra-ui/react';
+import { Logo, Menu, MenuDropDown, SwitchColor } from 'components/';
 
 export const Navbar = () => {
 	const [isSmallerThan576] = useMediaQuery('(max-width: 576px)');
+	const bgColor = useColorModeValue('#fff', '#19202c');
 
 	return (
 		<Flex
-			pl={4}
-			pr={0}
+			pl="4"
+			pr="0"
 			alignItems="center"
 			gap="10"
 			pos="sticky"
-			top={0}
-			zIndex={9999}
-			bgColor="#1e2634"
+			top="0"
+			zIndex="9999"
+			bgColor={bgColor}
 			justifyContent={isSmallerThan576 && 'space-between'}
 		>
 			<Logo />
 			<Menu />
-			<MenuDropDown />
+			<Flex>
+				<SwitchColor />
+				<MenuDropDown />
+			</Flex>
 		</Flex>
 	);
 };
