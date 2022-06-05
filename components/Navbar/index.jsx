@@ -13,7 +13,7 @@ export const Navbar = () => {
 			pos="sticky"
 			top={0}
 			zIndex={9999}
-			bgColor="currentcolor"
+			bgColor="#1e2634"
 			justifyContent={isSmallerThan576 && 'space-between'}
 		>
 			<Logo />
