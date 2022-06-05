@@ -1,0 +1,51 @@
+.card-container {
+	position: relative;
+	cursor: pointer;
+}
+
+.card--small {
+	/* min-width: 300px; */
+	height: 170px;
+	min-height: 170px;
+}
+
+.card--medium {
+	min-width: 158px;
+	height: 280px;
+	min-height: 280px;
+}
+
+.card--large {
+	min-width: 218px;
+	height: 434px;
+	min-height: 434px;
+}
+
+.card--small,
+.card--medium,
+.card--large {
+	width: 100%;
+}
+
+.card--small > span,
+.card--medium > span,
+.card--large > span {
+	width: inherit !important;
+	height: inherit !important;
+	min-width: inherit;
+	min-height: inherit;
+}
+
+.card-image {
+	object-fit: cover;
+	border-radius: 5px;
+}
+
+.card-image--motion {
+	position: relative;
+	display: inline-block;
+}
+
+.card-image--motion:hover {
+	z-index: 99;
+}
