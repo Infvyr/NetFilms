@@ -3,5 +3,6 @@ html {
 }
 
 body {
-	--chakra-colors-chakra-body-bg: linear-gradient(to top, #ece9e6, #fefafa);
+	--chakra-colors-chakra-body-bg: hsl(218deg 28% 16%);
+	--chakra-colors-chakra-body-text: #f5f5f5;
 }
