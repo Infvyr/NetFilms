@@ -22,7 +22,7 @@ export const MenuDropDown = () => (
 					height={20}
 				/>
 			}
-			bg="currentColor"
+			bg="inherit"
 			_focus={{ boxShadow: 'none' }}
 			_hover={{ bg: 'blackAlpha.400' }}
 			_active={{ bg: 'blackAlpha.500' }}
@@ -40,19 +40,31 @@ export const MenuDropDown = () => (
 				size="full"
 			/>
 		</MenuButton>
-		<MenuList>
-			<MenuItem>
+		<MenuList bgColor="#1e2634" color="#fff" border="0">
+			<MenuItem
+				_hover={{ bg: 'blackAlpha.400' }}
+				_focus={{ bg: 'blackAlpha.400' }}
+				_active={{ bg: 'blackAlpha.400' }}
+			>
 				<Link href="/user/profile">
 					<a style={{ width: '100%' }}>Profile</a>
 				</Link>
 			</MenuItem>
-			<MenuItem>
+			<MenuItem
+				_hover={{ bg: 'blackAlpha.400' }}
+				_focus={{ bg: 'blackAlpha.400' }}
+				_active={{ bg: 'blackAlpha.400' }}
+			>
 				<Link href="/browse/favourites">
 					<a style={{ width: '100%' }}>My Favourites</a>
 				</Link>
 			</MenuItem>
 			<Divider />
-			<MenuItem>
+			<MenuItem
+				_hover={{ bg: 'blackAlpha.400' }}
+				_focus={{ bg: 'blackAlpha.400' }}
+				_active={{ bg: 'blackAlpha.400' }}
+			>
 				<Link href="/login">
 					<a style={{ width: '100%' }}>Sign out</a>
 				</Link>
