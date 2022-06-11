@@ -10,17 +10,19 @@ export const Card = ({
 	imgUrl = '/static/no-image-placeholder.webp',
 	size = 'medium'
 }) => {
-	const [imgSrc, setImgSrc] = useState(imgUrl);
+	const scaleValue = 1.1;
 	const classMap = {
 		large: styles['card--large'],
 		medium: styles['card--medium'],
 		small: styles['card--small']
 	};
-	const scaleValue = 1.1;
+	const [imgSrc, setImgSrc] = useState(imgUrl);
 
 	const handleOnError = () => setImgSrc('/static/no-image-placeholder.webp');
+
 	const imageLoader = ({ src, width }) =>
 		`${src}?auto=compress&cs=tinysrgb&w=${width}&h=750&dpr=2`;
+
 	const scaleProperty =
 		id === 'card-0' ? { scaleY: scaleValue } : { scale: scaleValue };
 

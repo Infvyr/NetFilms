@@ -4,9 +4,9 @@
 }
 
 .card--small {
-	min-width: 280px;
-	height: 180px;
-	min-height: 170px;
+	min-width: 250px;
+	height: 250px;
+	min-height: 250px;
 }
 
 .card--medium {
