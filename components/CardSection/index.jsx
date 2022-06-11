@@ -15,8 +15,8 @@ export const CardSection = ({ title, data = [], size = 'medium' }) => {
 				overflowX="scroll"
 				overflowY="hidden"
 			>
-				{JSON.parse(data).length > 0
-					? JSON.parse(data).map((rec, idx) => (
+				{data.length > 0
+					? data.map((rec, idx) => (
 							<Card
 								key={idx}
 								id={`card-${idx}`}

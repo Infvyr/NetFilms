@@ -2,8 +2,7 @@ import { Banner, CardSection } from 'components';
 import { getVideos } from 'lib/videos';
 
 export async function getServerSideProps() {
-	const data = await getVideos();
-	const videos = JSON.stringify(data);
+	const videos = await getVideos();
 
 	return {
 		props: { videos }
