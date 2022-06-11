@@ -7,7 +7,11 @@ export async function getServerSideProps() {
 	const travel = await getVideos('travelling across europe');
 
 	return {
-		props: { popular, disney, travel }
+		props: {
+			popular: popular || [],
+			disney: disney || [],
+			travel: travel || []
+		}
 	};
 }
 
