@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }) {
 			<ChakraProvider theme={theme}>
 				<>
 					<Navbar />
-					<main>
+					<main role="content">
 						<Component {...pageProps} />
 					</main>
 				</>

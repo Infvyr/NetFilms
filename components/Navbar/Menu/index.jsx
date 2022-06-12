@@ -12,7 +12,7 @@ export const Menu = () => {
 	const bg = useColorModeValue('gray.100', 'blackAlpha.400');
 
 	return (
-		<Box as="nav" flex={1} className={styles.menu}>
+		<Box as="nav" flex={1} className={styles.menu} role="navigation">
 			<List display="inline-flex" alignItems="center" fontSize="lg">
 				<ListItem>
 					<Link href="/" passHref>

@@ -1,10 +1,10 @@
 import { Banner, CardSection } from 'components';
-import { getVideos } from 'lib/videos';
+import { getVideos, getPopularVideos } from 'lib/videos';
 
 export async function getServerSideProps() {
-	const popular = await getVideos('dc videos');
-	const disney = await getVideos('disney trailer');
-	const travel = await getVideos('travelling across europe');
+	const popular = /*await getPopularVideos();*/ [];
+	const disney = /*await getVideos('disney trailer');*/ [];
+	const travel = /*await getVideos('travelling across europe');*/ [];
 
 	return {
 		props: {
