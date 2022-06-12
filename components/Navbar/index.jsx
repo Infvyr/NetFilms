@@ -7,6 +7,7 @@ export const Navbar = () => {
 
 	return (
 		<Flex
+			as="header"
 			pl="4"
 			pr="0"
 			alignItems="center"
