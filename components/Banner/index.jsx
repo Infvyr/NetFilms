@@ -21,7 +21,6 @@ export const Banner = (props) => {
 			h="40vh"
 			w="100%"
 			bg={`url(${imgUrl}) center/cover no-repeat`}
-			filter=""
 			display="flex"
 			alignItems="center"
 			padding={5}
