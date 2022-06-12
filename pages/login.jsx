@@ -34,6 +34,7 @@ export default function Login() {
 				if (email === 'testmail@mail.loc') {
 					router.push('/');
 				} else {
+					setIsEmailError(true);
 					setErrorMessage('You entered an unregistered email address!');
 				}
 			} else {
