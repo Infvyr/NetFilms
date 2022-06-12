@@ -6,17 +6,43 @@ import {
 	Heading,
 	Input
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useCallback, useState } from 'react';
 import bgImage from '../public/static/netflix-bg.webp';
-import styles from '../styles/pages/Login.module.css';
 
 export default function Login() {
-	const [input, setInput] = useState('');
-	const [isInputError, setIsInputError] = useState(null);
+	const [email, setEmail] = useState('');
+	const [isEmailError, setIsEmailError] = useState(false);
+	const [errorMessage, setErrorMessage] = useState('');
+	const router = useRouter();
 
-	const handleInputChange = (e) => setInput(e.target.value);
+	const handleInputChange = (e) => {
+		setErrorMessage('');
+		setEmail(e.target.value.trim());
+	};
 
-	const onSubmit = () => {};
+	const onSubmit = useCallback(
+		(e) => {
+			e.preventDefault();
+
+			const regExp = new RegExp(
+				// eslint-disable-next-line no-control-regex
+				"([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|[[\t -Z^-~]*])"
+			);
+
+			if (email.match(regExp)) {
+				if (email === 'testmail@mail.loc') {
+					router.push('/');
+				} else {
+					setErrorMessage('You entered an unregistered email address!');
+				}
+			} else {
+				setIsEmailError(true);
+				setErrorMessage('Enter a valid email address!');
+			}
+		},
+		[email, router]
+	);
 
 	return (
 		<Box
@@ -44,20 +70,20 @@ export default function Login() {
 			>
 				<Box p={10} width="inherit" bgColor="rgba(0,0,0, 0.75)" color="white">
 					<Heading as="h1">Sign In</Heading>
-					<form className={styles['login-form']}>
-						<FormControl isRequired>
+					<Box mt="2rem" mb="2rem">
+						<FormControl isRequired isInvalid={isEmailError}>
 							<Input
 								id="email"
 								type="email"
-								value={input}
+								value={email}
 								placeholder="Email"
 								size="lg"
 								onChange={handleInputChange}
 								border="none"
 								bgColor="#333"
 							/>
-							{isInputError && (
-								<FormErrorMessage>Email is required.</FormErrorMessage>
+							{isEmailError && (
+								<FormErrorMessage>{errorMessage}</FormErrorMessage>
 							)}
 						</FormControl>
 
@@ -74,13 +100,9 @@ export default function Login() {
 						>
 							Sign In
 						</Button>
-					</form>
+					</Box>
 				</Box>
 			</Box>
 		</Box>
 	);
 }
-
-Login.getLayout = function getLayout(page) {
-	return <div className="LOGIN">{page}</div>;
-};
