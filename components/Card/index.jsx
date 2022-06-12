@@ -6,27 +6,32 @@ import { useState } from 'react';
 import styles from './Card.module.css';
 
 export const Card = ({
+	id,
 	imgUrl = '/static/no-image-placeholder.webp',
 	size = 'medium'
 }) => {
-	const [imgSrc, setImgSrc] = useState(imgUrl);
+	const scaleValue = 1.1;
 	const classMap = {
 		large: styles['card--large'],
 		medium: styles['card--medium'],
 		small: styles['card--small']
 	};
+	const [imgSrc, setImgSrc] = useState(imgUrl);
 
 	const handleOnError = () => setImgSrc('/static/no-image-placeholder.webp');
-	const imageLoader = ({ src, width }) => {
-		return `${src}?auto=compress&cs=tinysrgb&w=${width}&h=750&dpr=2`;
-	};
+
+	const imageLoader = ({ src, width }) =>
+		`${src}?auto=compress&cs=tinysrgb&w=${width}&h=750&dpr=2`;
+
+	const scaleProperty =
+		id === 'card-0' ? { scaleY: scaleValue } : { scale: scaleValue };
 
 	return (
-		<div className={styles['card-container']}>
+		<article className={styles['card-container']}>
 			<motion.div
 				className={cn(styles['card-image--motion'], classMap[size])}
-				whileHover={{ scale: 1.1 }}
-				whileTap={{ scale: 1.1 }}
+				whileHover={{ ...scaleProperty }}
+				whileTap={{ ...scaleProperty }}
 			>
 				<Image
 					src={imgSrc}
@@ -39,11 +44,12 @@ export const Card = ({
 					blurDataURL
 				/>
 			</motion.div>
-		</div>
+		</article>
 	);
 };
 
 Card.propTypes = {
+	id: PropTypes.string,
 	imgUrl: PropTypes.string,
 	size: PropTypes.string
 };
