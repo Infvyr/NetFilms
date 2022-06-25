@@ -1,7 +1,9 @@
 import { Flex, useColorModeValue, useMediaQuery } from '@chakra-ui/react';
 import { Logo, Menu, MenuDropDown, SwitchColor } from 'components/';
+import useUserMeta from 'hooks/useMagicUserMeta';
 
 export const Navbar = () => {
+	const { username } = useUserMeta();
 	const [isSmallerThan576] = useMediaQuery('(max-width: 576px)');
 	const bgColor = useColorModeValue('#fff', '#19202c');
 
@@ -22,7 +24,7 @@ export const Navbar = () => {
 			<Menu />
 			<Flex>
 				<SwitchColor />
-				<MenuDropDown />
+				<MenuDropDown username={username} />
 			</Flex>
 		</Flex>
 	);
