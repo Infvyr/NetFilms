@@ -8,10 +8,13 @@ import {
 	MenuList,
 	useColorModeValue
 } from '@chakra-ui/react';
+import useMagicLogout from 'hooks/useMagicLogout';
 import Image from 'next/image';
 import Link from 'next/link';
+import PropTypes from 'prop-types';
 
-export const MenuDropDown = () => {
+export const MenuDropDown = ({ username }) => {
+	const { handleLogout } = useMagicLogout();
 	const bg = useColorModeValue('blackAlpha.50', 'whiteAlpha.200');
 	const menuListBg = useColorModeValue('white', '#1e2634');
 	const menuListColor = useColorModeValue('black', 'white');
@@ -38,6 +41,13 @@ export const MenuDropDown = () => {
 				/>
 			</MenuButton>
 			<MenuList bgColor={menuListBg} color={menuListColor}>
+				<MenuItem as="div">
+					<span>
+						<b>Signed in as:</b> <br />
+						{username}
+					</span>
+				</MenuItem>
+				<Divider />
 				<MenuItem>
 					<Link href="/user/profile">
 						<a style={{ width: '100%' }}>Profile</a>
@@ -51,10 +61,16 @@ export const MenuDropDown = () => {
 				<Divider />
 				<MenuItem>
 					<Link href="/login">
-						<a style={{ width: '100%' }}>Sign out</a>
+						<a onClick={handleLogout} style={{ width: '100%' }}>
+							Sign out
+						</a>
 					</Link>
 				</MenuItem>
 			</MenuList>
 		</Menu>
 	);
+};
+
+MenuDropDown.propTypes = {
+	username: PropTypes.string
 };
