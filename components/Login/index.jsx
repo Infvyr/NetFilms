@@ -6,10 +6,10 @@ import {
 	Heading,
 	Input
 } from '@chakra-ui/react';
+import { magic } from 'lib/magic-client';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
-import bgImage from '../public/static/netflix-bg.webp';
-import { magic } from 'lib/magic-client';
+import bgImage from '../../public/static/netflix-bg.webp';
 
 export default function Login() {
 	const [email, setEmail] = useState('');
@@ -45,7 +45,7 @@ export default function Login() {
 			);
 
 			if (email.match(regExp)) {
-				if (email === 'allfortrashmail@gmail.com') {
+				if (email) {
 					try {
 						setIsLoading(true);
 						const didToken = await magic.auth.loginWithMagicLink({
