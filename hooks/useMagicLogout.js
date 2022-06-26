@@ -11,10 +11,10 @@ export default function useMagicLogout() {
 
 			try {
 				await magic.user.logout();
-				router.replace('/login');
+				router.replace('/');
 			} catch (error) {
 				console.error('Error logging out', error);
-				router.replace('/login');
+				router.replace('/');
 			}
 		},
 		[router]

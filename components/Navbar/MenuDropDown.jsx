@@ -60,7 +60,7 @@ export const MenuDropDown = ({ username }) => {
 				</MenuItem>
 				<Divider />
 				<MenuItem>
-					<Link href="/login">
+					<Link href="/">
 						<a onClick={handleLogout} style={{ width: '100%' }}>
 							Sign out
 						</a>
