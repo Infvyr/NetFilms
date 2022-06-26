@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import bgImage from '../../public/static/netflix-bg.webp';
 
-export default function Login() {
+export const Login = () => {
 	const [email, setEmail] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
 	const [isEmailError, setIsEmailError] = useState(false);
@@ -131,4 +131,4 @@ export default function Login() {
 			</Box>
 		</Box>
 	);
-}
+};

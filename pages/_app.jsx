@@ -5,11 +5,13 @@ import { Navbar } from 'components';
 import '../styles/global.css';
 import { useEffect, useState } from 'react';
 import { magic } from 'lib/magic-client';
-import { useRouter } from 'next/router';
-import Login from 'components/Login';
+import dynamic from 'next/dynamic';
+
+const DynamicLogin = dynamic(() =>
+	import('../components/Login').then((mod) => mod.Login)
+);
 
 function MyApp({ Component, pageProps }) {
-	const router = useRouter();
 	const [isLoading, setIsLoading] = useState(true);
 	const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
@@ -28,12 +30,11 @@ function MyApp({ Component, pageProps }) {
 			} catch (error) {
 				setIsLoading(false);
 				console.error(error);
-				router.replace('/');
 			}
 		};
 
 		checkUserLoggedIn();
-	}, [router, isUserLoggedIn]);
+	}, []);
 
 	return (
 		<>
@@ -55,7 +56,7 @@ function MyApp({ Component, pageProps }) {
 								</main>
 							</>
 						) : (
-							<Login />
+							<DynamicLogin />
 						)}
 					</>
 				)}
