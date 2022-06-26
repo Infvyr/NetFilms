@@ -6,15 +6,29 @@ import {
 	Heading,
 	Input
 } from '@chakra-ui/react';
+import { magic } from 'lib/magic-client';
 import { useRouter } from 'next/router';
-import { useCallback, useState } from 'react';
-import bgImage from '../public/static/netflix-bg.webp';
+import { useCallback, useEffect, useState } from 'react';
+import bgImage from '../../public/static/netflix-bg.webp';
 
 export default function Login() {
 	const [email, setEmail] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
 	const [isEmailError, setIsEmailError] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
 	const router = useRouter();
+
+	useEffect(() => {
+		const handleComplete = () => setIsLoading(false);
+
+		router.events.on('routerChangeComplete', handleComplete);
+		router.events.on('routerChangeError', handleComplete);
+
+		return () => {
+			router.events.off('routerChangeComplete', handleComplete);
+			router.events.off('routerChangeError', handleComplete);
+		};
+	}, [router]);
 
 	const handleInputChange = (e) => {
 		setErrorMessage('');
@@ -22,7 +36,7 @@ export default function Login() {
 	};
 
 	const onSubmit = useCallback(
-		(e) => {
+		async (e) => {
 			e.preventDefault();
 
 			const regExp = new RegExp(
@@ -31,13 +45,24 @@ export default function Login() {
 			);
 
 			if (email.match(regExp)) {
-				if (email === 'testmail@mail.loc') {
-					router.push('/');
+				if (email) {
+					try {
+						setIsLoading(true);
+						const didToken = await magic.auth.loginWithMagicLink({
+							email
+						});
+						if (didToken) router.push('/');
+					} catch (error) {
+						console.error('Something went wrong logging in', error);
+						setIsLoading(false);
+					}
 				} else {
+					setIsLoading(false);
 					setIsEmailError(true);
 					setErrorMessage('You entered an unregistered email address!');
 				}
 			} else {
+				setIsLoading(false);
 				setIsEmailError(true);
 				setErrorMessage('Enter a valid email address!');
 			}
@@ -91,9 +116,9 @@ export default function Login() {
 						<br />
 
 						<Button
-							isLoading={false}
+							isLoading={isLoading}
 							onClick={onSubmit}
-							loadingText="Signing in"
+							loadingText="Loading"
 							spinnerPlacement="end"
 							colorScheme="red"
 							width="100%"
