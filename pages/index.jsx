@@ -2,15 +2,15 @@ import { Banner, CardSection } from 'components';
 import { getVideos, getPopularVideos } from 'lib/videos';
 
 export async function getServerSideProps() {
-	const popular = /*await getPopularVideos();*/ [];
-	const disney = /*await getVideos('disney trailer');*/ [];
-	const travel = /*await getVideos('travelling across europe');*/ [];
+	const popular = await getPopularVideos();
+	const disney = await getVideos('disney trailer');
+	const travel = await getVideos('travelling across europe');
 
 	return {
 		props: {
-			popular: popular || [],
-			disney: disney || [],
-			travel: travel || []
+			popular: popular,
+			disney: disney,
+			travel: travel
 		}
 	};
 }
