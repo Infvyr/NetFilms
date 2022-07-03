@@ -3,11 +3,6 @@ import {
 	Container,
 	Heading,
 	ListItem,
-	Modal,
-	ModalBody,
-	ModalContent,
-	ModalFooter,
-	ModalOverlay,
 	SimpleGrid,
 	Text,
 	UnorderedList
@@ -54,89 +49,72 @@ export default function VideoPage({ video }) {
 	const router = useRouter();
 	const videoId = router.query.videoId;
 
-	const onModalClose = () => router.back();
-
 	return (
 		<>
-			<h1>Video {videoId}</h1>
-			<Modal
-				isCentered
-				onClose={onModalClose}
-				size="5xl"
-				isOpen="true"
-				autoFocus
-			>
-				<ModalOverlay />
-				<ModalContent>
-					<ModalBody p="0">
-						<Iframe videoId={videoId} />
-					</ModalBody>
-					<ModalFooter>
-						<Container
-							centerContent
-							maxW="5xl"
-							pl={{ base: 0, md: 4 }}
-							pr={{ base: 0, md: 4 }}
-							alignItems="unset"
-						>
-							<SimpleGrid
-								columns={{ sm: 1, lg: 2 }}
-								spacing={{ base: 4, lg: 9 }}
-								templateColumns={{ base: '1fr', lg: '1fr 0.35fr' }}
-							>
-								<Box maxHeight="25rem" overflowY="scroll">
-									{title && (
-										<Heading mb="1" size="md">
-											{title}
-										</Heading>
-									)}
-									{publishedAt && (
-										<>
-											<b>Published: </b>
-											<time dateTime={publishedAt}>
-												{dateFormat(publishedAt)}
-											</time>
-										</>
-									)}
-									{description && (
-										<Text mt="3" mb="2">
-											{description}
-										</Text>
-									)}
-								</Box>
-								<Box order={{ base: -1, lg: 2 }}>
-									<UnorderedList listStyleType="none" ml="0">
-										{channelTitle && (
-											<ListItem>
-												<b>Cast: </b>
-												{channelTitle}
-											</ListItem>
-										)}
-										{viewCount && (
-											<ListItem>
-												<b>Views: </b>
-												{viewCount}
-											</ListItem>
-										)}
-										{likeCount && (
-											<ListItem>
-												<b>Likes: </b>
-												{likeCount}
-											</ListItem>
-										)}
-										{commentCount && (
-											<ListItem>
-												<b>Comments: </b>
-												{commentCount}
-											</ListItem>
-										)}
-									</UnorderedList>
-								</Box>
-							</SimpleGrid>
-						</Container>
-					</ModalFooter>
-				</ModalContent>
-			</Modal>
+			<Box height="clamp(50vh, 80vh, 45vh)" bgColor="gray.300">
+				<Iframe videoId={videoId} />
+			</Box>
+			<Container centerContent maxW="5xl" alignItems="unset">
+				<SimpleGrid
+					columns={{ sm: 1, lg: 2 }}
+					spacing={{ base: 4, lg: 8 }}
+					templateColumns={{ base: '1fr', lg: '1fr 0.35fr' }}
+					pt="8"
+					pb="8"
+				>
+					<Box borderWidth="1px" borderRadius="lg" p="6">
+						{title && (
+							<Heading as="h1" mb="1" size="md">
+								{title}
+							</Heading>
+						)}
+						{publishedAt && (
+							<>
+								<b>Published: </b>
+								<time dateTime={publishedAt}>{dateFormat(publishedAt)}</time>
+							</>
+						)}
+						{description && (
+							<Text mt="3" mb="3">
+								{description}
+							</Text>
+						)}
+					</Box>
+					<Box
+						order={{ base: -1, lg: 2 }}
+						borderWidth="1px"
+						borderRadius="lg"
+						p="6"
+					>
+						<UnorderedList listStyleType="none" ml="0">
+							{channelTitle && (
+								<ListItem>
+									<b>Cast: </b>
+									{channelTitle}
+								</ListItem>
+							)}
+							{viewCount && (
+								<ListItem>
+									<b>Views: </b>
+									{viewCount}
+								</ListItem>
+							)}
+							{likeCount && (
+								<ListItem>
+									<b>Likes: </b>
+									{likeCount}
+								</ListItem>
+							)}
+							{commentCount && (
+								<ListItem>
+									<b>Comments: </b>
+									{commentCount}
+								</ListItem>
+							)}
+						</UnorderedList>
+					</Box>
+				</SimpleGrid>
+			</Container>
 		</>
 	);
 }
