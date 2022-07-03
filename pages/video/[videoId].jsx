@@ -13,24 +13,17 @@ import {
 	UnorderedList
 } from '@chakra-ui/react';
 import { Iframe } from 'components';
+import { getVideoById } from 'lib/videos';
 import { useRouter } from 'next/router';
 import { dateFormat } from 'utils/formatDate';
 
-
-
 export async function getStaticProps() {
-	const videoMockup = {
-		publishedAt: '2022-06-09T13:00:26Z',
-		title: 'DC Super Hero Girls | Two Heads Are Better Than One | @DC Kids',
-		description:
-			"There's No 'I' in Team! I think we can all agree teamwork can really make the dream work, especially when it comes to taking ...",
-		channelTitle: 'DC Kids',
-		viewCount: 10000
-	};
+	let videoId = 'venrE8gdz30';
+	const videoMockup = await getVideoById(videoId);
 
 	return {
 		props: {
-			videoMockup
+			videoMockup: videoMockup.length > 0 ? videoMockup[0] : {}
 		},
 		revalidate: 10
 	};
@@ -82,7 +75,17 @@ export default function VideoPage({ videoMockup }) {
 							>
 								<Box maxHeight="25rem" overflowY="scroll">
 									{videoMockup?.title && (
-										<Heading size="md">{videoMockup.title}</Heading>
+										<Heading mb="1" size="md">
+											{videoMockup.title}
+										</Heading>
+									)}
+									{videoMockup?.publishedAt && (
+										<>
+											<b>Published: </b>
+											<time dateTime={videoMockup.publishedAt}>
+												{dateFormat(videoMockup.publishedAt)}
+											</time>
+										</>
 									)}
 									{videoMockup?.description && (
 										<Text mt="3" mb="2">
@@ -93,17 +96,27 @@ export default function VideoPage({ videoMockup }) {
 								<Box order={{ base: -1, lg: 2 }}>
 									<UnorderedList listStyleType="none" ml="0">
 										{videoMockup.channelTitle && (
-											<ListItem>Cast: {videoMockup.channelTitle}</ListItem>
-										)}
-										{videoMockup.viewCount && (
-											<ListItem>Views: {videoMockup.viewCount}</ListItem>
-										)}
-										{videoMockup?.publishedAt && (
 											<ListItem>
-												Published:&nbsp;
-												<time dateTime={videoMockup.publishedAt}>
-													{dateFormat(videoMockup.publishedAt)}
-												</time>
+												<b>Cast: </b>
+												{videoMockup.channelTitle}
+											</ListItem>
+										)}
+										{videoMockup.statistics.viewCount && (
+											<ListItem>
+												<b>Views: </b>
+												{videoMockup.statistics.viewCount}
+											</ListItem>
+										)}
+										{videoMockup.statistics.likeCount && (
+											<ListItem>
+												<b>Likes: </b>
+												{videoMockup.statistics.likeCount}
+											</ListItem>
+										)}
+										{videoMockup.statistics.commentCount && (
+											<ListItem>
+												<b>Comments: </b>
+												{videoMockup.statistics.commentCount}
 											</ListItem>
 										)}
 									</UnorderedList>
