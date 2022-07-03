@@ -6,14 +6,15 @@ import {
 	useColorModeValue
 } from '@chakra-ui/react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
 
 export const Banner = (props) => {
-	const { title, subTitle, imgUrl } = props;
+	const { title, subTitle, imgUrl, videoId } = props;
+	const router = useRouter();
 	const btnColorScheme = useColorModeValue('whiteAlpha', 'gray');
 
-	const handleOnClick = (e) => {
-		console.log(e.target);
-	};
+	const handleOnClick = () => router.push(`/video/${videoId}`);
 
 	return (
 		<Box
@@ -49,23 +50,32 @@ export const Banner = (props) => {
 					{subTitle}
 				</Text>
 				<Box>
-					<Button
-						pr="6"
-						colorScheme={btnColorScheme}
-						leftIcon={
-							<Image
-								src="/static/play-icon.svg"
-								alt="play icon"
-								width={32}
-								height={32}
-							/>
-						}
-						onClick={handleOnClick}
-					>
-						Play
-					</Button>
+					{videoId && (
+						<Button
+							pr="6"
+							colorScheme={btnColorScheme}
+							leftIcon={
+								<Image
+									src="/static/play-icon.svg"
+									alt="play icon"
+									width={32}
+									height={32}
+								/>
+							}
+							onClick={handleOnClick}
+						>
+							Play
+						</Button>
+					)}
 				</Box>
 			</Box>
 		</Box>
 	);
+};
+
+Banner.propTypes = {
+	title: PropTypes.string,
+	subTitle: PropTypes.string,
+	imgUrl: PropTypes.string,
+	videoId: PropTypes.string
 };

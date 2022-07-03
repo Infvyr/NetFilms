@@ -2,10 +2,11 @@ import { Center, ChakraProvider, Spinner } from '@chakra-ui/react';
 import theme from '../config/theme';
 import Head from 'next/head';
 import { Navbar } from 'components';
-import '../styles/global.css';
 import { useEffect, useState } from 'react';
 import { magic } from 'lib/magic-client';
 import dynamic from 'next/dynamic';
+
+import '../styles/global.css';
 
 const DynamicLogin = dynamic(() =>
 	import('../components/Login').then((mod) => mod.Login)
