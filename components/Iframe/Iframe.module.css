@@ -1,7 +1,5 @@
 .iframe{
-  border-top-left-radius: var(--chakra-radii-md);
-  border-top-right-radius: var(--chakra-radii-md);
-  height: 360px;
+  height: clamp(50vh, 80vh, 45vh);
   width: 100%;
   border: 0;
 }
