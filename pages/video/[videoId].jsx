@@ -16,16 +16,37 @@ import { Iframe } from 'components';
 import { useRouter } from 'next/router';
 import { dateFormat } from 'utils/formatDate';
 
-const videoMockup = {
-	publishedAt: '2022-06-09T13:00:26Z',
-	title: 'DC Super Hero Girls | Two Heads Are Better Than One | @DC Kids',
-	description:
-		"There's No 'I' in Team! I think we can all agree teamwork can really make the dream work, especially when it comes to taking ...",
-	channelTitle: 'DC Kids',
-	viewCount: 10000
-};
 
-export default function VideoPage() {
+
+export async function getStaticProps() {
+	const videoMockup = {
+		publishedAt: '2022-06-09T13:00:26Z',
+		title: 'DC Super Hero Girls | Two Heads Are Better Than One | @DC Kids',
+		description:
+			"There's No 'I' in Team! I think we can all agree teamwork can really make the dream work, especially when it comes to taking ...",
+		channelTitle: 'DC Kids',
+		viewCount: 10000
+	};
+
+	return {
+		props: {
+			videoMockup
+		},
+		revalidate: 10
+	};
+}
+
+export async function getStaticPaths() {
+	const listOfVideos = ['venrE8gdz30', 'GTBy9SRDOAM', '7CWIJmp9ukI'];
+
+	const paths = listOfVideos.map((videoId) => ({
+		params: { videoId }
+	}));
+
+	return { paths, fallback: 'blocking' };
+}
+
+export default function VideoPage({ videoMockup }) {
 	const router = useRouter();
 	const videoId = router.query.videoId;
 
