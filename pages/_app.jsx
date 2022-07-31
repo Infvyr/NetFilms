@@ -43,7 +43,7 @@ function MyApp({ Component, pageProps }) {
 				<title>NetFilms</title>
 			</Head>
 			<ChakraProvider theme={theme}>
-				{/* {isLoading ? (
+				{isLoading ? (
 					<Center height="100vh" bgColor="red.50">
 						<Spinner color="red.500" size="xl" />
 					</Center>
@@ -60,7 +60,7 @@ function MyApp({ Component, pageProps }) {
 							<DynamicLogin />
 						)}
 					</>
-				)} */}
+				)}
 
 				<>
 					<Navbar />
