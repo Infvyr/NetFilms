@@ -8,3 +8,5 @@ export { CardSection } from 'components/CardSection';
 export { SwitchColor } from 'components/SwitchColor';
 export { Login } from 'components/Login';
 export { Iframe } from 'components/Iframe';
+export { LikeIcon } from 'components/Like';
+export { DislikeIcon } from 'components/Dislike';
