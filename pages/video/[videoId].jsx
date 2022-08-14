@@ -1,13 +1,18 @@
 import {
 	Box,
+	Button,
+	ButtonGroup,
 	Container,
+	Flex,
 	Heading,
 	ListItem,
 	SimpleGrid,
 	Text,
-	UnorderedList
+	Tooltip,
+	UnorderedList,
+	useBoolean
 } from '@chakra-ui/react';
-import { Iframe } from 'components';
+import { DislikeIcon, Iframe, LikeIcon } from 'components';
 import { getVideoById } from 'lib/videos';
 import { useRouter } from 'next/router';
 import { dateFormat } from 'utils/formatDate';
@@ -48,11 +53,22 @@ export default function VideoPage({ video }) {
 	} = video;
 	const router = useRouter();
 	const videoId = router.query.videoId;
+	const [likeFlag, setLikeFlag] = useBoolean();
+	const [dislikeFlag, setDislikeFlag] = useBoolean();
+
+	const handleToogleLike = () => {
+		setLikeFlag.on();
+		setDislikeFlag.off();
+	};
+	const handleToogleDislike = () => {
+		setDislikeFlag.on();
+		setLikeFlag.off();
+	};
 
 	return (
 		<>
 			<Box height="clamp(50vh, 80vh, 45vh)" bgColor="gray.300">
-				<Iframe videoId={videoId} />
+				<Iframe videoId={videoId} title="video" />
 			</Box>
 			<Container centerContent maxW="5xl" alignItems="unset">
 				<SimpleGrid
@@ -63,11 +79,37 @@ export default function VideoPage({ video }) {
 					pb="8"
 				>
 					<Box borderWidth="1px" borderRadius="lg" p="6">
-						{title && (
-							<Heading as="h1" mb="1" size="md">
-								{title}
-							</Heading>
-						)}
+						<Flex justify="space-between" align="flex-end">
+							{title && (
+								<Heading as="h1" mb="1" size="md">
+									{title}
+								</Heading>
+							)}
+							<ButtonGroup spacing={2}>
+								<Tooltip label="Like">
+									<Button
+										variant="outline"
+										width={8}
+										height={8}
+										padding={0}
+										onClick={handleToogleLike}
+									>
+										<LikeIcon selected={likeFlag} />
+									</Button>
+								</Tooltip>
+								<Tooltip label="Dislike">
+									<Button
+										variant="outline"
+										width={8}
+										height={8}
+										padding={0}
+										onClick={handleToogleDislike}
+									>
+										<DislikeIcon selected={dislikeFlag} />
+									</Button>
+								</Tooltip>
+							</ButtonGroup>
+						</Flex>
 						{publishedAt && (
 							<>
 								<b>Published: </b>
