@@ -26,12 +26,12 @@ export const Login = () => {
 	useEffect(() => {
 		const handleComplete = () => setIsLoading(false);
 
-		router.events.on('routerChangeComplete', handleComplete);
-		router.events.on('routerChangeError', handleComplete);
+		router.events.on('routeChangeComplete', handleComplete);
+		router.events.on('routeChangeError', handleComplete);
 
 		return () => {
-			router.events.off('routerChangeComplete', handleComplete);
-			router.events.off('routerChangeError', handleComplete);
+			router.events.off('routeChangeComplete', handleComplete);
+			router.events.off('routeChangeError', handleComplete);
 		};
 	}, [router]);
 
