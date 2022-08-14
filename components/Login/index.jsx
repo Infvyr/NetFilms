@@ -11,6 +11,11 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import bgImage from '../../public/static/netflix-bg.webp';
 
+const regExp = new RegExp(
+	// eslint-disable-next-line no-control-regex
+	"([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|[[\t -Z^-~]*])"
+);
+
 export const Login = () => {
 	const [email, setEmail] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
@@ -21,12 +26,12 @@ export const Login = () => {
 	useEffect(() => {
 		const handleComplete = () => setIsLoading(false);
 
-		router.events.on('routerChangeComplete', handleComplete);
-		router.events.on('routerChangeError', handleComplete);
+		router.events.on('routeChangeComplete', handleComplete);
+		router.events.on('routeChangeError', handleComplete);
 
 		return () => {
-			router.events.off('routerChangeComplete', handleComplete);
-			router.events.off('routerChangeError', handleComplete);
+			router.events.off('routeChangeComplete', handleComplete);
+			router.events.off('routeChangeError', handleComplete);
 		};
 	}, [router]);
 
@@ -39,11 +44,6 @@ export const Login = () => {
 		async (e) => {
 			e.preventDefault();
 
-			const regExp = new RegExp(
-				// eslint-disable-next-line no-control-regex
-				"([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|[[\t -Z^-~]*])"
-			);
-
 			if (email.match(regExp)) {
 				if (email) {
 					try {
@@ -51,10 +51,28 @@ export const Login = () => {
 						const didToken = await magic.auth.loginWithMagicLink({
 							email
 						});
-						if (didToken) router.push('/');
+						if (didToken) {
+							const response = await fetch('/api/login', {
+								method: 'POST',
+								headers: {
+									Authorization: `Bearer ${didToken}`,
+									'Content-Type': 'application/json'
+								}
+							});
+
+							const loggedInResponse = await response.json();
+
+							if (loggedInResponse?.done) {
+								router.push('/');
+								window.location.reload();
+							} else {
+								setIsLoading(false);
+								setErrorMessage('Something went wrong logging in');
+							}
+						}
 					} catch (error) {
-						console.error('Something went wrong logging in', error);
 						setIsLoading(false);
+						console.error('Something went wrong logging in', error);
 					}
 				} else {
 					setIsLoading(false);
