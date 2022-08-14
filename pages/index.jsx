@@ -1,6 +1,5 @@
 import { Banner, CardSection } from 'components';
 import { getVideos, getPopularVideos } from 'lib/videos';
-import { startFetchMyQuery } from 'lib/db/hasura';
 
 export async function getServerSideProps() {
 	const popular = await getPopularVideos();
@@ -17,8 +16,6 @@ export async function getServerSideProps() {
 }
 
 export default function Home({ popular, disney, travel }) {
-	startFetchMyQuery();
-
 	return (
 		<>
 			<Banner

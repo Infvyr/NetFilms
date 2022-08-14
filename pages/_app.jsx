@@ -61,13 +61,6 @@ function MyApp({ Component, pageProps }) {
 						)}
 					</>
 				)}
-
-				<>
-					<Navbar />
-					<main role="content">
-						<Component {...pageProps} />
-					</main>
-				</>
 			</ChakraProvider>
 		</>
 	);
