@@ -54,7 +54,7 @@ export const MenuDropDown = ({ username }) => {
 					</Link>
 				</MenuItem>
 				<MenuItem>
-					<Link href="/browse/favourites">
+					<Link href="/favourites">
 						<a style={{ width: '100%' }}>My Favourites</a>
 					</Link>
 				</MenuItem>
