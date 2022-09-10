@@ -12,6 +12,7 @@ export default function useMagicLogout() {
 			try {
 				await magic.user.logout();
 				router.replace('/');
+				window.location.reload();
 			} catch (error) {
 				console.error('Error logging out', error);
 				router.replace('/');

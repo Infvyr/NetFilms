@@ -124,8 +124,6 @@ export default function VideoPage({ video }) {
 		})();
 	}, [videoId]);
 
-	console.log(typeof viewCount);
-
 	return (
 		<>
 			<Box height="clamp(50vh, 80vh, 45vh)" bgColor="gray.300">
