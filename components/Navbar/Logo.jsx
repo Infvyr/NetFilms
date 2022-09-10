@@ -9,10 +9,10 @@ export const Logo = () => {
 		<Box>
 			<Heading size="xl" color="red.500">
 				{pathname === '/' ? (
-					<Text cursor="default">NetFilms</Text>
+					<Text cursor="default">Netty</Text>
 				) : (
 					<Link href="/" passHref>
-						<a>NetFilms</a>
+						<a>Netty</a>
 					</Link>
 				)}
 			</Heading>

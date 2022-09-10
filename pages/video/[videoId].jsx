@@ -15,8 +15,8 @@ import { DislikeIcon, Iframe, LikeIcon } from 'components';
 import { getVideoById } from 'lib/videos';
 import debounce from 'lodash.debounce';
 import { useRouter } from 'next/router';
-import { useMemo, useState, useEffect, useCallback } from 'react';
-import { dateFormat } from 'utils/formatDate';
+import { useMemo, useState, useEffect, useCallback, useRef } from 'react';
+import { dateFormat, formatNumber } from 'utils';
 
 export async function getStaticProps(context) {
 	const videoId = context.params?.videoId;
@@ -56,6 +56,7 @@ export default function VideoPage({ video }) {
 	const videoId = router.query.videoId;
 	const [likeFlag, setLikeFlag] = useState(false);
 	const [dislikeFlag, setDislikeFlag] = useState(false);
+	const fetchedVideoRef = useRef(false);
 
 	const runRatingService = useCallback(
 		async (favourited) => {
@@ -103,6 +104,27 @@ export default function VideoPage({ video }) {
 		() => debounce(handleDislike, 300),
 		[handleDislike]
 	);
+
+	useEffect(() => {
+		if (fetchedVideoRef.current) return;
+		fetchedVideoRef.current = true;
+
+		(async () => {
+			try {
+				const response = await fetch(`/api/stats?videoId=${videoId}`);
+				const data = await response.json();
+				if (data.length > 0) {
+					const favourited = data[0].favourited;
+					if (favourited === 1) setLikeFlag(true);
+					if (favourited === 0) setDislikeFlag(true);
+				}
+			} catch (error) {
+				console.error(error);
+			}
+		})();
+	}, [videoId]);
+
+	console.log(typeof viewCount);
 
 	return (
 		<>
@@ -177,19 +199,19 @@ export default function VideoPage({ video }) {
 							{viewCount && (
 								<ListItem>
 									<b>Views: </b>
-									{viewCount}
+									{formatNumber(viewCount)}
 								</ListItem>
 							)}
 							{likeCount && (
 								<ListItem>
 									<b>Likes: </b>
-									{likeCount}
+									{formatNumber(likeCount)}
 								</ListItem>
 							)}
 							{commentCount && (
 								<ListItem>
 									<b>Comments: </b>
-									{commentCount}
+									{formatNumber(commentCount)}
 								</ListItem>
 							)}
 						</UnorderedList>

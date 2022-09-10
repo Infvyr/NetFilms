@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps }) {
 	return (
 		<>
 			<Head>
-				<title>NetFilms</title>
+				<title>Netty</title>
 			</Head>
 			<ChakraProvider theme={theme}>
 				{isLoading ? (

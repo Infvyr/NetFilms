@@ -6,7 +6,8 @@ export default async function stats(req, resp) {
 	try {
 		const token = req.cookies['nf-token'];
 		if (token) {
-			const { videoId } = req.body;
+			const inputParams = req.method === 'POST' ? req.body : req.query;
+			const { videoId } = inputParams;
 			if (videoId) {
 				const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
 				const userId = decodedToken.issuer;
