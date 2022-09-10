@@ -5,5 +5,5 @@ const dateOptions = {
 	day: 'numeric'
 };
 
-export const dateFormat = (date, locale = 'us-US') =>
+export const dateFormat = (date, locale = 'en-GB') =>
 	new Date(date).toLocaleDateString(locale, dateOptions);

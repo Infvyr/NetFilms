@@ -9,13 +9,14 @@ import {
 	SimpleGrid,
 	Text,
 	Tooltip,
-	UnorderedList,
-	useBoolean
+	UnorderedList
 } from '@chakra-ui/react';
 import { DislikeIcon, Iframe, LikeIcon } from 'components';
 import { getVideoById } from 'lib/videos';
+import debounce from 'lodash.debounce';
 import { useRouter } from 'next/router';
-import { dateFormat } from 'utils/formatDate';
+import { useMemo, useState, useEffect, useCallback, useRef } from 'react';
+import { dateFormat, formatNumber } from 'utils';
 
 export async function getStaticProps(context) {
 	const videoId = context.params?.videoId;
@@ -53,17 +54,77 @@ export default function VideoPage({ video }) {
 	} = video;
 	const router = useRouter();
 	const videoId = router.query.videoId;
-	const [likeFlag, setLikeFlag] = useBoolean();
-	const [dislikeFlag, setDislikeFlag] = useBoolean();
+	const [likeFlag, setLikeFlag] = useState(false);
+	const [dislikeFlag, setDislikeFlag] = useState(false);
+	const fetchedVideoRef = useRef(false);
 
-	const handleToogleLike = () => {
-		setLikeFlag.on();
-		setDislikeFlag.off();
-	};
-	const handleToogleDislike = () => {
-		setDislikeFlag.on();
-		setLikeFlag.off();
-	};
+	const runRatingService = useCallback(
+		async (favourited) => {
+			return await fetch('/api/stats', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					videoId,
+					favourited
+				})
+			});
+		},
+		[videoId]
+	);
+
+	const handleLike = useCallback(async () => {
+		try {
+			setLikeFlag(true);
+			setDislikeFlag(false);
+			const favourited = likeFlag ? 0 : 1;
+			await runRatingService(favourited);
+		} catch (error) {
+			console.error(error);
+		}
+	}, [likeFlag, runRatingService]);
+
+	const handleDislike = useCallback(async () => {
+		try {
+			setDislikeFlag(true);
+			setLikeFlag(false);
+			const favourited = dislikeFlag ? 1 : 0;
+			await runRatingService(favourited);
+		} catch (error) {
+			console.error(error);
+		}
+	}, [dislikeFlag, runRatingService]);
+
+	const debouncedSetLike = useMemo(
+		() => debounce(handleLike, 300),
+		[handleLike]
+	);
+	const debouncedSetDislike = useMemo(
+		() => debounce(handleDislike, 300),
+		[handleDislike]
+	);
+
+	useEffect(() => {
+		if (fetchedVideoRef.current) return;
+		fetchedVideoRef.current = true;
+
+		(async () => {
+			try {
+				const response = await fetch(`/api/stats?videoId=${videoId}`);
+				const data = await response.json();
+				if (data.length > 0) {
+					const favourited = data[0].favourited;
+					if (favourited === 1) setLikeFlag(true);
+					if (favourited === 0) setDislikeFlag(true);
+				}
+			} catch (error) {
+				console.error(error);
+			}
+		})();
+	}, [videoId]);
+
+	console.log(typeof viewCount);
 
 	return (
 		<>
@@ -92,7 +153,7 @@ export default function VideoPage({ video }) {
 										width={8}
 										height={8}
 										padding={0}
-										onClick={handleToogleLike}
+										onClick={debouncedSetLike}
 									>
 										<LikeIcon selected={likeFlag} />
 									</Button>
@@ -103,7 +164,7 @@ export default function VideoPage({ video }) {
 										width={8}
 										height={8}
 										padding={0}
-										onClick={handleToogleDislike}
+										onClick={debouncedSetDislike}
 									>
 										<DislikeIcon selected={dislikeFlag} />
 									</Button>
@@ -138,19 +199,19 @@ export default function VideoPage({ video }) {
 							{viewCount && (
 								<ListItem>
 									<b>Views: </b>
-									{viewCount}
+									{formatNumber(viewCount)}
 								</ListItem>
 							)}
 							{likeCount && (
 								<ListItem>
 									<b>Likes: </b>
-									{likeCount}
+									{formatNumber(likeCount)}
 								</ListItem>
 							)}
 							{commentCount && (
 								<ListItem>
 									<b>Comments: </b>
-									{commentCount}
+									{formatNumber(commentCount)}
 								</ListItem>
 							)}
 						</UnorderedList>
