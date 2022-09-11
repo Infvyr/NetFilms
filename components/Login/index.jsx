@@ -9,6 +9,7 @@ import {
 import { magic } from 'lib/magic-client';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
+import { CustomHead } from 'components';
 import bgImage from '../../public/static/netflix-bg.webp';
 
 const regExp = new RegExp(
@@ -42,7 +43,7 @@ export const Login = () => {
 
 	const onSubmit = useCallback(
 		async (e) => {
-			e.preventDefault();
+			e?.preventDefault();
 
 			if (email.match(regExp)) {
 				if (email) {
@@ -63,6 +64,7 @@ export const Login = () => {
 							const loggedInResponse = await response.json();
 
 							if (loggedInResponse?.done) {
+								setEmail('');
 								router.push('/');
 								window.location.reload();
 							} else {
@@ -88,65 +90,75 @@ export const Login = () => {
 		[email, router]
 	);
 
+	const onKeyUp = (event) => {
+		if (event.key === 'Enter') {
+			onSubmit();
+		}
+	};
+
 	return (
-		<Box
-			height="100vh"
-			bg={`url(${bgImage.src}) center/cover no-repeat`}
-			position="relative"
-			_after={{
-				content: '""',
-				pos: 'absolute',
-				left: 0,
-				top: 0,
-				w: '100%',
-				h: 'inherit',
-				bgColor: 'rgba(0 0 0 / 50%)'
-			}}
-		>
+		<>
+			<CustomHead title="Netty - Sign in" />
 			<Box
-				width="100%"
-				maxW={['100%', '450px']}
-				position="absolute"
-				left="50%"
-				top="50%"
-				transform="translate(-50%, -50%)"
-				zIndex="1"
+				height="100vh"
+				bg={`url(${bgImage.src}) center/cover no-repeat`}
+				position="relative"
+				_after={{
+					content: '""',
+					pos: 'absolute',
+					left: 0,
+					top: 0,
+					w: '100%',
+					h: 'inherit',
+					bgColor: 'rgba(0 0 0 / 50%)'
+				}}
 			>
-				<Box p={10} width="inherit" bgColor="rgba(0,0,0, 0.75)" color="white">
-					<Heading as="h1">Sign In</Heading>
-					<Box mt="2rem" mb="2rem">
-						<FormControl isRequired isInvalid={isEmailError}>
-							<Input
-								id="email"
-								type="email"
-								value={email}
-								placeholder="Email"
+				<Box
+					width="100%"
+					maxW={['100%', '450px']}
+					position="absolute"
+					left="50%"
+					top="50%"
+					transform="translate(-50%, -50%)"
+					zIndex="1"
+				>
+					<Box p={10} width="inherit" bgColor="rgba(0,0,0, 0.75)" color="white">
+						<Heading as="h1">Sign In</Heading>
+						<Box mt="2rem" mb="2rem">
+							<FormControl isRequired isInvalid={isEmailError}>
+								<Input
+									id="email"
+									type="email"
+									value={email}
+									placeholder="Email"
+									size="lg"
+									onChange={handleInputChange}
+									onKeyUp={onKeyUp}
+									border="none"
+									bgColor="#333"
+								/>
+								{isEmailError && (
+									<FormErrorMessage>{errorMessage}</FormErrorMessage>
+								)}
+							</FormControl>
+
+							<br />
+
+							<Button
+								isLoading={isLoading}
+								onClick={onSubmit}
+								loadingText="Loading"
+								spinnerPlacement="end"
+								colorScheme="red"
+								width="100%"
 								size="lg"
-								onChange={handleInputChange}
-								border="none"
-								bgColor="#333"
-							/>
-							{isEmailError && (
-								<FormErrorMessage>{errorMessage}</FormErrorMessage>
-							)}
-						</FormControl>
-
-						<br />
-
-						<Button
-							isLoading={isLoading}
-							onClick={onSubmit}
-							loadingText="Loading"
-							spinnerPlacement="end"
-							colorScheme="red"
-							width="100%"
-							size="lg"
-						>
-							Sign In
-						</Button>
+							>
+								Sign In
+							</Button>
+						</Box>
 					</Box>
 				</Box>
 			</Box>
-		</Box>
+		</>
 	);
 };

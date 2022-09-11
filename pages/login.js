@@ -1,8 +1,13 @@
-import { Login } from 'components';
+import { Login, CustomHead } from 'components';
 import { redirectUser } from 'lib/utils';
 
 export default function LoginPage() {
-	return <Login />;
+	return (
+		<>
+			<CustomHead title="Netty - Sign in" />
+			<Login />
+		</>
+	);
 }
 
 export async function getServerSideProps(context) {

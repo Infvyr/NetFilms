@@ -1,4 +1,5 @@
 import { redirectUser } from 'lib/utils';
+import { CustomHead, CardSection } from 'components';
 
 export async function getServerSideProps(context) {
 	const { userId } = await redirectUser(context);
@@ -17,5 +18,10 @@ export async function getServerSideProps(context) {
 }
 
 export default function FavouritesPage() {
-	return <>Favourites</>;
+	return (
+		<>
+			<CustomHead title="Watch favourite videos again" />
+			<CardSection title="Disney" data={[]} />
+		</>
+	);
 }

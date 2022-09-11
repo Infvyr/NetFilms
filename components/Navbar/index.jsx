@@ -10,8 +10,7 @@ export const Navbar = () => {
 	return (
 		<Flex
 			as="header"
-			pl="4"
-			pr="0"
+			px={[4, 14]}
 			alignItems="center"
 			gap="10"
 			pos="sticky"
