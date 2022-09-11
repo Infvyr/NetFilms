@@ -1,25 +1,29 @@
-import { magic } from 'lib/magic-client';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
+import useUserMeta from 'hooks/useMagicUserMeta';
 
 export default function useMagicLogout() {
 	const router = useRouter();
+	const { didToken } = useUserMeta();
 
-	const handleLogout = useCallback(
-		async (e) => {
-			e.preventDefault();
+	const handleSignOut = useCallback(async () => {
+		// e?.preventDefault();
 
-			try {
-				await magic.user.logout();
-				router.replace('/');
-				window.location.reload();
-			} catch (error) {
-				console.error('Error logging out', error);
-				router.replace('/');
-			}
-		},
-		[router]
-	);
+		try {
+			const response = await fetch('/api/logout', {
+				method: 'POST',
+				headers: {
+					Authorization: `Bearer ${didToken}`,
+					'Content-Type': 'application/json'
+				}
+			});
+			await response.json();
+		} catch (error) {
+			console.error('Error logging out', error);
+			router.push('/login');
+			router.reload();
+		}
+	}, [didToken, router]);
 
-	return { handleLogout };
+	return { handleSignOut };
 }

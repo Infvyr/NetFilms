@@ -3,17 +3,22 @@ import { useState, useEffect } from 'react';
 
 export default function useUserMeta() {
 	const [username, setUserName] = useState('');
+	const [didToken, setDidToken] = useState('');
 
 	useEffect(() => {
 		(async () => {
 			try {
 				const { email } = await magic.user.getMetadata();
-				if (email) setUserName(email);
+				const didToken = await magic.user.getIdToken();
+				if (email) {
+					setUserName(email);
+					setDidToken(didToken);
+				}
 			} catch (error) {
 				console.error('Error retrieving email', error);
 			}
 		})();
 	}, []);
 
-	return { username };
+	return { username, didToken };
 }
