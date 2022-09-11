@@ -29,7 +29,7 @@ export const Menu = () => {
 					</Link>
 				</ListItem>
 				<ListItem>
-					<Link href="/browse/favourites" passHref>
+					<Link href="/favourites" passHref>
 						<ChakraLink
 							lineHeight={3.35}
 							display="block"

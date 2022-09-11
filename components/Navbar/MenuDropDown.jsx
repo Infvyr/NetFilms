@@ -14,7 +14,7 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 
 export const MenuDropDown = ({ username }) => {
-	const { handleLogout } = useMagicLogout();
+	const { handleSignOut } = useMagicLogout();
 	const bg = useColorModeValue('blackAlpha.50', 'whiteAlpha.200');
 	const menuListBg = useColorModeValue('white', '#1e2634');
 	const menuListColor = useColorModeValue('black', 'white');
@@ -24,6 +24,7 @@ export const MenuDropDown = ({ username }) => {
 			<MenuButton
 				as={Button}
 				bg="inherit"
+				px={3}
 				_focus={{ boxShadow: 'none' }}
 				_hover={{ bg: bg }}
 				_active={{ bg: bg }}
@@ -33,8 +34,8 @@ export const MenuDropDown = ({ username }) => {
 						<Image
 							src="/static/account_circle.svg"
 							alt="avatar"
-							width={30}
-							height={30}
+							width={20}
+							height={20}
 						/>
 					}
 					size="full"
@@ -49,22 +50,13 @@ export const MenuDropDown = ({ username }) => {
 				</MenuItem>
 				<Divider />
 				<MenuItem>
-					<Link href="/user/profile">
-						<a style={{ width: '100%' }}>Profile</a>
-					</Link>
-				</MenuItem>
-				<MenuItem>
-					<Link href="/browse/favourites">
+					<Link href="/favourites">
 						<a style={{ width: '100%' }}>My Favourites</a>
 					</Link>
 				</MenuItem>
 				<Divider />
-				<MenuItem>
-					<Link href="/">
-						<a onClick={handleLogout} style={{ width: '100%' }}>
-							Sign out
-						</a>
-					</Link>
+				<MenuItem onClick={handleSignOut}>
+					<span style={{ width: '100%' }}>Sign out</span>
 				</MenuItem>
 			</MenuList>
 		</Menu>

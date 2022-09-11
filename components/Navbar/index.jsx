@@ -10,14 +10,14 @@ export const Navbar = () => {
 	return (
 		<Flex
 			as="header"
-			pl="4"
-			pr="0"
+			px={[4, 14]}
 			alignItems="center"
 			gap="10"
 			pos="sticky"
 			top="0"
 			zIndex="9999"
 			bgColor={bgColor}
+			boxShadow="sm"
 			justifyContent={isSmallerThan576 && 'space-between'}
 		>
 			<Logo />

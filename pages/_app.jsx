@@ -1,7 +1,6 @@
 import { Center, ChakraProvider, Spinner } from '@chakra-ui/react';
 import theme from '../config/theme';
-import Head from 'next/head';
-import { Navbar } from 'components';
+import { Navbar, CustomHead } from 'components';
 import { useEffect, useState } from 'react';
 import { magic } from 'lib/magic-client';
 import dynamic from 'next/dynamic';
@@ -11,7 +10,6 @@ import '../styles/global.css';
 const DynamicLogin = dynamic(() =>
 	import('../components/Login').then((mod) => mod.Login)
 );
-
 function MyApp({ Component, pageProps }) {
 	const [isLoading, setIsLoading] = useState(true);
 	const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
@@ -39,9 +37,7 @@ function MyApp({ Component, pageProps }) {
 
 	return (
 		<>
-			<Head>
-				<title>NetFilms</title>
-			</Head>
+			<CustomHead />
 			<ChakraProvider theme={theme}>
 				{isLoading ? (
 					<Center height="100vh" bgColor="red.50">

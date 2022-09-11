@@ -8,6 +8,7 @@ export const SwitchColor = () => {
 	return (
 		<Button
 			aria-label="Switch color mode"
+			px={3}
 			onClick={toggleColorMode}
 			variant="ghost"
 		>
