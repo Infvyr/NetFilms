@@ -9,7 +9,8 @@ import {
 	SimpleGrid,
 	Text,
 	Tooltip,
-	UnorderedList
+	UnorderedList,
+	useColorMode
 } from '@chakra-ui/react';
 import { DislikeIcon, Iframe, LikeIcon } from 'components';
 import { getVideoById } from 'lib/videos';
@@ -52,11 +53,15 @@ export default function VideoPage({ video }) {
 			commentCount: 0
 		}
 	} = video;
+	const { colorMode } = useColorMode();
 	const router = useRouter();
 	const videoId = router.query.videoId;
 	const [likeFlag, setLikeFlag] = useState(false);
 	const [dislikeFlag, setDislikeFlag] = useState(false);
 	const fetchedVideoRef = useRef(false);
+
+	const bgTooltip = colorMode === 'light' ? 'gray.800' : 'whiteAlpha.50';
+	const colorTooltip = colorMode === 'light' ? 'gray.100' : 'white';
 
 	const runRatingService = useCallback(
 		async (favourited) => {
@@ -145,23 +150,35 @@ export default function VideoPage({ video }) {
 								</Heading>
 							)}
 							<ButtonGroup spacing={2}>
-								<Tooltip label="Like">
+								<Tooltip
+									label="Like"
+									hasArrow
+									bg={bgTooltip}
+									color={colorTooltip}
+								>
 									<Button
 										variant="outline"
 										width={8}
 										height={8}
 										padding={0}
+										_hover={{ bgColor: 'whiteAlpha.50' }}
 										onClick={debouncedSetLike}
 									>
 										<LikeIcon selected={likeFlag} />
 									</Button>
 								</Tooltip>
-								<Tooltip label="Dislike">
+								<Tooltip
+									label="Dislike"
+									hasArrow
+									bg={bgTooltip}
+									color={colorTooltip}
+								>
 									<Button
 										variant="outline"
 										width={8}
 										height={8}
 										padding={0}
+										_hover={{ bgColor: 'whiteAlpha.50' }}
 										onClick={debouncedSetDislike}
 									>
 										<DislikeIcon selected={dislikeFlag} />

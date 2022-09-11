@@ -17,6 +17,7 @@ export const Navbar = () => {
 			top="0"
 			zIndex="9999"
 			bgColor={bgColor}
+			boxShadow="sm"
 			justifyContent={isSmallerThan576 && 'space-between'}
 		>
 			<Logo />
