@@ -8,7 +8,8 @@ import styles from './Card.module.css';
 export const Card = ({
 	id,
 	imgUrl = '/static/no-image-placeholder.webp',
-	size = 'medium'
+	size = 'medium',
+	shouldTransform = true
 }) => {
 	const scaleValue = 1.1;
 	const classMap = {
@@ -25,13 +26,16 @@ export const Card = ({
 
 	const scaleProperty =
 		id === 'card-0' ? { scaleY: scaleValue } : { scale: scaleValue };
+	const shouldScale = shouldTransform && {
+		whileHover: { ...scaleProperty },
+		whileTap: { ...scaleProperty }
+	};
 
 	return (
 		<article className={styles['card-container']}>
 			<motion.div
 				className={cn(styles['card-image--motion'], classMap[size])}
-				whileHover={{ ...scaleProperty }}
-				whileTap={{ ...scaleProperty }}
+				{...shouldScale}
 			>
 				<Image
 					src={imgSrc}
@@ -51,5 +55,6 @@ export const Card = ({
 Card.propTypes = {
 	id: PropTypes.string,
 	imgUrl: PropTypes.string,
-	size: PropTypes.string
+	size: PropTypes.string,
+	shouldTransform: PropTypes.bool
 };

@@ -1,6 +1,23 @@
-.container::-webkit-scrollbar {
-	display: none;
+.container:not(:hover){
+	overflow-x: hidden;
 }
-.container {
-	scrollbar-width: none;
+
+.wrap{
+	flex-wrap: wrap;
+}
+
+.link{
+	flex: 1
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px){
+	.link{
+		flex: 0 1 calc((100% / 3) - 8px)
+	}
+}
+
+@media screen and (min-width: 1200px){
+	.link{
+		flex: 0 1 calc((100% / 6) - 8px)
+	}
 }
