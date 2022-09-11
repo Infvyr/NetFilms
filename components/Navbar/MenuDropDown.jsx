@@ -24,6 +24,7 @@ export const MenuDropDown = ({ username }) => {
 			<MenuButton
 				as={Button}
 				bg="inherit"
+				px={3}
 				_focus={{ boxShadow: 'none' }}
 				_hover={{ bg: bg }}
 				_active={{ bg: bg }}
@@ -33,8 +34,8 @@ export const MenuDropDown = ({ username }) => {
 						<Image
 							src="/static/account_circle.svg"
 							alt="avatar"
-							width={30}
-							height={30}
+							width={20}
+							height={20}
 						/>
 					}
 					size="full"

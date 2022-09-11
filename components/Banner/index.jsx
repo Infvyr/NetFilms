@@ -36,7 +36,7 @@ export const Banner = (props) => {
 				bg={`url(${imgUrl}) center/cover no-repeat`}
 				display="flex"
 				alignItems="center"
-				padding={5}
+				px={[4, 14]}
 				_after={{
 					content: '""',
 					pos: 'absolute',
